@@ -17,23 +17,21 @@ from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from Home.views import home
-from Planets.views import planets, planets_template, search_planets, add_planets, get_user_planets
-from Movies.views import movies, movies_template
+from Planets.views import planets, search_planets, add_planets, get_user_planets
+from Movies.views import movies
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', home),
     url(r'^get_planets/$', planets),
     url(r'^search_planets/$', search_planets),
     url(r'^add_planets/$', add_planets),
     url(r'^get_user_planets/$', get_user_planets),
-    url(r'^planets/$', planets_template),
     url(r'^get_movies/$', movies),
-    url(r'^movies/$', movies_template),
-] 
+]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

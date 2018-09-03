@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from Planets.utils.planet_images import IMAGES
 from Planets.forms import PlanetForm
 from Planets.models import Planet
@@ -8,24 +8,19 @@ import requests
 import json
 
 
-def planets_template(request):
-    if request.method == "GET":
-        return render(request, "planets.html", {})
 
-
+@csrf_exempt
 def add_planets(request):
     if request.method == "POST":
         form = PlanetForm(request.POST, request.FILES)
         if form.is_valid():
-
-            # commit=False means the form doesn't save at this time.
-            # commit defaults to True which means it normally saves.
+            print("form is valid")
             model_instance = form.save(commit=False)
             model_instance.save()
-            return redirect('/add_planets')
-    else:
-        form = PlanetForm()
-        return render(request, "add_planets.html", {"form": form})
+            return JsonResponse({"message": "success"})
+        else:
+            form = PlanetForm()
+            return JsonResponse({"message": "failure"})
 
 
 def get_user_planets(request):

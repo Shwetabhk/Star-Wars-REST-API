@@ -1,12 +1,7 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from Movies.utils.movies_images import IMAGES
 import requests
 import json
-
-
-def movies_template(request):
-    return render(request, "movies.html", {})
 
 
 def movies(request):
